@@ -1,0 +1,31 @@
+{
+    "sources": [
+        {
+            "type": "api",
+            "name": "sales_data",
+            "url": "https://api.example.com/sales",
+            "params": {"date": "2023-01-01"},
+            "data_key": "results",
+            "transformations": {
+                "rename_columns": {"sale_date": "date", "amt": "amount"},
+                "date_columns": ["date"]
+            }
+        },
+        {
+            "type": "gcs",
+            "name": "inventory",
+            "bucket": "my-data-bucket",
+            "file": "inventory/current_inventory.csv",
+            "transformations": {
+                "rename_columns": {"prod_id": "product_id"}
+            }
+        }
+    ],
+    "output": {
+        "base_name": "business_report",
+        "gcs_upload": {
+            "bucket": "report-output-bucket",
+            "path": "monthly_reports"
+        }
+    }
+}
